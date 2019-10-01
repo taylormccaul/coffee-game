@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Coffee</title>
+        <style>
+            input, button {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <p id="start-p"></p>
+        <label for="calc" id="calc-label">How many cups of coffee do you need? Enter an integer: </label>
+        <input type="text" name="calc" id="calc">
+        <button type="submit" name="calc-submit" id="calc-submit">Submit</button>
+        <label for="water" id="water-label">How many ml of water does the coffee machine have?</label>
+        <input type="text" name="water" id="water">
+        <button type="submit" name="water-submit" id="water-submit">Submit</button>
+        <label for="milk" id="milk-label">How many ml of milk does the coffee machine have?</label>
+        <input type="text" name="milk" id="milk">
+        <button type="submit" name="milk-submit" id="milk-submit">Submit</button>
+        <label for="beans" id="beans-label">How many g of coffee beans does the coffee machine have?</label>
+        <input type="text" name="beans" id="beans">
+        <button type="submit" name="beans-submit" id="beans-submit">Submit</button>
+        <label for="cups" id="cups-label">How many cups of coffee will you need?</label>
+        <input type="text" name="cups" id="cups">
+        <button type="submit" name="cups-submit" id="cups-submit">Submit</button>
+        <script>
+            /*startP = document.getElementById('start-p');
+            startP.innerHTML = "Starting to make coffee...";
+
+            setTimeout(() => { startP.innerHTML = "Boiling water..." }, 3000);
+
+            setTimeout(() => { startP.innerHTML = "Mixing boiled water with crushed coffee beans..." }, 3000);
+
+            setTimeout(() => { startP.innerHTML = "Pouring coffee into the cup..." }, 3000);
+
+            setTimeout(() => { startP.innerHTML = "Grinding coffee beans..." }, 3000);
+            
+            setTimeout(() => { startP.innerHTML = "Pouring some milk into the cup..." }, 3000);
+
+            setTimeout(() => { startP.innerHTML = "Coffee is ready!"}, 3000);*/
+            /*Boiling water<br>
+            Mixing boiled water with crushed coffee beans<br>
+            Pouring coffee into the cup<br>
+            Pouring some milk into the cup<br>
+            Coffee is ready`*/
+            let water = 200;
+            let milk = 50;
+            let beans = 15;
+            let waterAmount = 0;
+            let milkAmount = 0;
+            let beansAmount = 0;
+            let cups = document.getElementById('calc').value; //prompt("How many cups of coffee will you need? Enter an integer: ");
+            let waterLabel;
+            let milkLabel;
+            let beansLabel;
+            let cupsLabel = document.getElementById('calc-label');
+            let submitBtn = document.getElementById('calc-submit');
+            submitBtn.addEventListener('click', calculate);
+            function calculate() {
+                water *= cups;
+                milk *= cups;
+                beans *= cups;
+                document.write(`For ${cups} cups of coffee, you will need:<br> 
+                ${water} ml of water<br>
+                ${milk} ml of milk<br>
+                ${beans} g of coffee beans`);
+            }
+
+            function machine() {
+                label.innerHTML = "Write how many ml of water the coffee machine has."
+            }
+        </script>
+    </body>
+</html>
