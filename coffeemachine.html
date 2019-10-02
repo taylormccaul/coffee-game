@@ -26,18 +26,47 @@
             }
 
             .calc-container {
-                background: blue;
+                background: rgb(155, 155, 255);
+                padding: 10px;
+                box-sizing: border-box;
                 width: 45vw;
             }
 
+            .calc-container > input, button {
+                border: none;
+                padding: 7px;
+                margin: 5px;
+            }
+
+            .calc-container input {
+                width: 11.1rem;
+            }
+
+            button {
+                width: 12rem;
+            }
+
+            button:hover {
+                cursor: pointer;
+            }
+
             .make-container {
-                background: yellow;
+                background: rgb(255, 255, 155);
+                padding: 10px;
+                box-sizing: border-box;
                 width: 25vw;
             }
             
             .res-container {
-                background: red;
+                background: rgb(255, 141, 141);
+                padding: 10px;
+                box-sizing: border-box;
                 width: 30vw;
+                text-align: center;
+            }
+
+            #add-water, #add-milk, #add-beans {
+                display: inline;
             }
         </style>
     </head>
@@ -64,6 +93,9 @@
             <div class="res-container">
                 <p id="calc-p"></p>
                 <p id="machine-p"></p>
+                <button type="button" name="add-water" id="add-water">+</button>
+                <button type="button" name="add-milk" id="add-milk">+</button>
+                <button type="button" name="add-beans" id="add-beans">+</button>
             </div>
         </div>
         <script>
@@ -121,6 +153,8 @@
                 milk = 50;
                 beans = 15;
             }
+
+            //ADD MONEY
 
             if (waterAmount === 0 && milkAmount === 0 && beansAmount === 0) {
                 machineP.innerHTML = "The coffee machine has no ingredients. Use the '+' buttons to stock it."
