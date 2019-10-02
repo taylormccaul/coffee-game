@@ -3,9 +3,9 @@
     <head>
         <title>Coffee</title>
         <style>
-            :root {
+            /*:root {
 
-            }
+            }Add root color variables*/
 
             html, body {
                 padding: 0;
@@ -13,9 +13,12 @@
             }
 
             .grid-container {
-                padding: 10px;
+                display: grid;
                 background-color:gray;
                 grid-template-columns: repeat(3, 2fr 1fr 1fr);
+                grid-gap: 0;
+                width: 100vw;
+                height: 100vh;
             }
 
             input, button {
@@ -24,10 +27,17 @@
 
             .calc-container {
                 background: blue;
+                width: 45vw;
+            }
+
+            .make-container {
+                background: yellow;
+                width: 25vw;
             }
             
             .res-container {
                 background: red;
+                width: 30vw;
             }
         </style>
     </head>
@@ -116,24 +126,9 @@
                 machineP.innerHTML = "The coffee machine has no ingredients. Use the '+' buttons to stock it."
             }
 
-            /*function (e) {
-                let calcP = document.getElementById('calc-p');
-                cups = document.getElementById('calc').value;
-                water *= cups;
-                milk *= cups;
-                beans *= cups;
-                calcP.innerHTML = (`For ${cups} cups of coffee, you will need:<br> 
-                ${water} ml of water<br>
-                ${milk} ml of milk<br>
-                ${beans} g of coffee beans`);
-                water = 200;
-                milk = 50;
-                beans = 15;
+            /*function machine() {
+                waterLabel.innerHTML = "How many ml of water does the coffee machine have?"
             }*/
-
-            function machine() {
-                label.innerHTML = "How many ml of water does the coffee machine have?"
-            }
         </script>
     </body>
 </html>
