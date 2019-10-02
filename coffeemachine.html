@@ -77,7 +77,7 @@
                 <label for="calc" id="calc-label">How many cups of coffee do you need? Enter an integer: </label>
                 <input type="text" name="calc" id="calc">
                 <button type="submit" name="calc-submit" id="calc-submit">Submit</button>
-                <label for="water" id="water-label">How many ml of water does the coffee machine have?</label>
+                <!--<label for="water" id="water-label">How many ml of water does the coffee machine have?</label>
                 <input type="text" name="water" id="water">
                 <button type="submit" name="water-submit" id="water-submit">Submit</button>
                 <label for="milk" id="milk-label">How many ml of milk does the coffee machine have?</label>
@@ -85,13 +85,14 @@
                 <button type="submit" name="milk-submit" id="milk-submit">Submit</button>
                 <label for="beans" id="beans-label">How many g of coffee beans does the coffee machine have?</label>
                 <input type="text" name="beans" id="beans">
-                <button type="submit" name="beans-submit" id="beans-submit">Submit</button>
+                <button type="submit" name="beans-submit" id="beans-submit">Submit</button>-->
                 <label for="cups" id="cups-label">How many cups of coffee do you want to make?</label>
                 <input type="text" name="target-cups" id="target-cups">
                 <button type="submit" name="cups-submit" id="cups-submit">Submit</button>
             </div>
             <div class="make-container"></div>
             <div class="res-container">
+                <p id="money-p"></p>
                 <p id="calc-p"></p>
                 <p id="machine-p"></p>
                 <p id="water-label">Add 200 mg water</p>
@@ -141,6 +142,7 @@
             let cupsBtn = document.getElementById('cups-submit');
 
             let calcP = document.getElementById('calc-p');
+            let moneyP = document.getElementById('money-p');
             let machineP = document.getElementById('machine-p');
             let waterAmountP = document.getElementById('water-amount');
             let milkAmountP = document.getElementById('milk-amount');
@@ -150,10 +152,18 @@
             let addMilk = document.getElementById('add-milk');
             let addBeans = document.getElementById('add-beans');
 
+            let waterAmount = 0;
+            let milkAmount = 0;
+            let beansAmount = 0;
+            let moneyAmount = 0;
+
             let targetCups = document.getElementById('target-cups').value;
 
             calcBtn.addEventListener('click', calculate);
             cupsBtn.addEventListener('click', check)
+
+            moneyP.innerHTML = `Money:<br>
+            ${moneyAmount}`;
 
             function calculate(e) {
                 cups = document.getElementById('calc').value;
@@ -170,10 +180,15 @@
             }
 
             //ADD MONEY
+            setInterval(() => {
+                moneyP.innerHTML = "Money: <br>" + (moneyAmount += 3);
+            }, 3000);
 
-            let waterAmount = 0;
-            let milkAmount = 0;
-            let beansAmount = 0;
+            //ADD UPGRADES
+
+            /*setInterval(() => {
+                waterAmountP.innerHTML = "You have " + (waterAmount += 10) + " mg of water.";
+            }, 3000);*/
 
             addWater.addEventListener('click', () => {
                 waterAmountP.innerHTML = "You have " + (waterAmount += 200) + " mg of water.";
@@ -195,13 +210,13 @@
             beansAmountP.innerHTML = `You have ${beansAmount} mg of coffee beans.`
 
             function check () {
-                if (waterAmount / 200 === targetCups &&
-                milkAmount / 50 === targetCups &&
-                beansAmount / 15 === targetCups) {
+                if (waterAmount / 200 == targetCups &&
+                milkAmount / 50 == targetCups &&
+                beansAmount / 15 == targetCups) {
                     machineP.innerHTML = "You have enough coffee! Click the 'brew' button to begin making coffee.";
-                } else if (waterAmount / 200 >= targetCups ||
-                milkAmount / 50 >= targetCups ||
-                beansAmount / 15 >= targetCups) {
+                } else if (waterAmount / 200 > targetCups ||
+                milkAmount / 50 > targetCups ||
+                beansAmount / 15 > targetCups) {
                     machineP.innerHTML = "You have more than enough coffee! Click the 'brew' button to begin making coffee.";
                 } else if (waterAmount / 200 < targetCups ||
                 milkAmount / 50 < targetCups ||
