@@ -3,6 +3,8 @@
     <head>
         <title>Coffee</title>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Montserrat|Oswald&display=swap" rel="stylesheet">
         <style>
             /*:root {
 
@@ -31,6 +33,7 @@
                 padding: 10px;
                 box-sizing: border-box;
                 width: 45vw;
+                font-family: 'Montserrat', sans-serif;
             }
 
             .calc-container > input, button {
@@ -56,6 +59,7 @@
                 padding: 10px;
                 box-sizing: border-box;
                 width: 25vw;
+                font-family: 'Montserrat', sans-serif;
             }
             
             .res-container {
@@ -64,6 +68,7 @@
                 box-sizing: border-box;
                 width: 30vw;
                 text-align: center;
+                font-family: 'Montserrat', sans-serif;
             }
 
             #add-water, #add-milk, #add-beans {
@@ -90,16 +95,18 @@
                 <input type="text" name="target-cups" id="target-cups">
                 <button type="submit" name="cups-submit" id="cups-submit">Submit</button>
             </div>
-            <div class="make-container"></div>
+            <div class="make-container">
+                <button type="button" name="brew" id="brew">Brew</button>
+            </div>
             <div class="res-container">
                 <p id="money-p"></p>
                 <p id="calc-p"></p>
                 <p id="machine-p"></p>
-                <p id="water-label">Add 200 mg water</p>
+                <p id="water-label">Add 200 mg water ($1)</p>
                 <button type="button" name="add-water" id="add-water">+</button>
-                <p id="milk-label">Add 50 mg milk</p>
+                <p id="milk-label">Add 50 mg milk ($2)</p>
                 <button type="button" name="add-milk" id="add-milk">+</button>
-                <p id="beans-label">Add 15 g coffee beans</p>
+                <p id="beans-label">Add 15 g coffee beans($3)</p>
                 <button type="button" name="add-beans" id="add-beans">+</button>
                 <p id="water-amount"></p>
                 <p id="milk-amount"></p>
@@ -140,6 +147,7 @@
 
             let calcBtn = document.getElementById('calc-submit');
             let cupsBtn = document.getElementById('cups-submit');
+            let brewBtn = document.getElementById('brew');
 
             let calcP = document.getElementById('calc-p');
             let moneyP = document.getElementById('money-p');
@@ -160,10 +168,13 @@
             let targetCups = document.getElementById('target-cups').value;
 
             calcBtn.addEventListener('click', calculate);
-            cupsBtn.addEventListener('click', check)
+            cupsBtn.addEventListener('click', check);
+            brewBtn.addEventListener('click', brew);
 
             moneyP.innerHTML = `Money:<br>
             ${moneyAmount}`;
+
+            //calculate ingredients needed to make a certain amount of coffee
 
             function calculate(e) {
                 cups = document.getElementById('calc').value;
@@ -179,10 +190,18 @@
                 beans = 15;
             }
 
-            //ADD MONEY
+            //Automatically add 3 dollars every three seconds
             setInterval(() => {
-                moneyP.innerHTML = "Money: <br>" + (moneyAmount += 3);
+                moneyP.innerHTML = "Money: <br>" + "$" + (moneyAmount += 10);
             }, 3000);
+
+            if (moneyAmount === 0) {
+                moneyP.innerHTML = "Money: <br>" + "$" + (moneyAmount);
+            } /*if (moneyAmount < 0) {
+                addWater.removeEventListener('click');
+                addMilk.removeEventListener('click');
+                add
+            }*/
 
             //ADD UPGRADES
 
@@ -190,39 +209,91 @@
                 waterAmountP.innerHTML = "You have " + (waterAmount += 10) + " mg of water.";
             }, 3000);*/
 
+            if (moneyAmount > 0) {
+
+            }
+
             addWater.addEventListener('click', () => {
-                waterAmountP.innerHTML = "You have " + (waterAmount += 200) + " mg of water.";
+                waterAmountP.innerHTML = "You have " + (waterAmount += 200) + " mg of water. (1/s)";
                 machineP.innerHTML = "";
+                moneyP.innerHTML = "Money: <br>" + "$" + (moneyAmount -= 1);
             });
+
+            setInterval(() => {
+                waterAmountP.innerHTML = "You have " + (waterAmount += 5) + " mg of water. (1/s)";
+            }, 5000);
 
             addMilk.addEventListener('click', () => {
-                milkAmountP.innerHTML = "You have " + (milkAmount += 50) + " mg of milk."
+                milkAmountP.innerHTML = "You have " + (milkAmount += 50) + " mg of milk. (0.6/s)"
                 machineP.innerHTML = "";
+                moneyP.innerHTML = "Money: <br>" + "$" + (moneyAmount -= 2);
             });
 
+            setInterval(() => {
+                milkAmountP.innerHTML = "You have " + (milkAmount += 3) + " mg of milk. (0.6/s)";
+            }, 5000);
+
             addBeans.addEventListener('click', () => {
-                beansAmountP.innerHTML = "You have " + (beansAmount += 15) + " g of coffee beans.";
+                beansAmountP.innerHTML = "You have " + (beansAmount += 15) + " g of coffee beans. (0.2/s)";
                 machineP.innerHTML = "";
+                moneyP.innerHTML = "Money: <br>" + "$" + (moneyAmount -= 3);
             });
+
+            setInterval(() => {
+                beansAmountP.innerHTML = "You have " + (beansAmount += 1) + " g of coffee beans. (0.2/s)";
+            }, 5000);
 
             waterAmountP.innerHTML = `You have ${waterAmount} mg of water.`
             milkAmountP.innerHTML = `You have ${milkAmount} mg of milk.`
             beansAmountP.innerHTML = `You have ${beansAmount} mg of coffee beans.`
 
+            //let waterTotal = waterAmount / 200;
+            //let milkTotal = milkAmount / 50;
+            //let beansTotal = beansAmount / 15;
+
             function check () {
-                if (waterAmount / 200 == targetCups &&
+                if (waterAmount / 200 == targetCups && 
                 milkAmount / 50 == targetCups &&
                 beansAmount / 15 == targetCups) {
                     machineP.innerHTML = "You have enough coffee! Click the 'brew' button to begin making coffee.";
-                } else if (waterAmount / 200 > targetCups ||
-                milkAmount / 50 > targetCups ||
-                beansAmount / 15 > targetCups) {
-                    machineP.innerHTML = "You have more than enough coffee! Click the 'brew' button to begin making coffee.";
+                } else if (waterAmount / 200 > targetCups &&
+                    milkAmount / 50 > targetCups &&
+                    beansAmount / 15 > targetCups) {
+                        let limitingReg;
+                        let regAmount;
+                        if (Math.floor(waterAmount / 200) <= Math.floor(milkAmount / 50) && Math.floor(waterAmount / 200) <= Math.floor(beansAmount / 15)) {
+                            limitingReg = waterAmount;
+                            regAmount = 200;
+                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 1) + " more cups of coffee. Click the 'brew' button to begin making coffee.";
+                        } else if (Math.floor(milkAmount / 50) <= Math.floor(waterAmount / 200) && Math.floor(milkAmount / 50) <= Math.floor(beansAmount / 15)) {
+                            limitingReg = milkAmount;
+                            regAmount = 50;
+                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 1) + " more cups of coffee. Click the 'brew' button to begin making coffee.";
+                        } else if (Math.floor(beansAmount / 15) <= Math.floor(waterAmount / 200) && Math.floor(beansAmount / 15) <= Math.floor(milkAmount / 50)) {
+                            limitingReg = beansAmount;
+                            regAmount = 15;
+                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 1) + " more cups of coffee. Click the 'brew' button to begin making coffee.";
+                        }
                 } else if (waterAmount / 200 < targetCups ||
-                milkAmount / 50 < targetCups ||
-                beansAmount / 15 < targetCups) {
+                    milkAmount / 50 < targetCups ||
+                    beansAmount / 15 < targetCups) {
                     machineP.innerHTML = "You do not have enough coffee! Stock the coffee machine with more ingredients and try again.";
                 }
+            }
+
+            /*let limitingReg;
+            let regAmount;
+
+            let ingArr = [waterAmount, milkAmount, beansAmount];*/
+
+            function brew() {
+                arr = ['Starting to make coffee...', 'Boiling water...', 'Mixing boiled water with crushed coffee beans...',
+                'Pouring the coffee into the cup...', 'Pouring some milk into the cup...', 'Coffee is ready!'];
+                setInterval(() => {
+                    for (i = 0; i < arr.length; i++) {
+                        machineP.innerHTML = arr[1]; //arr[0], arr[1], arr[2], etc. would work. However, it would lack conciseness.
+                    }
+                }, 3000)
             }
 
             if (waterAmount === 0 && milkAmount === 0 && beansAmount === 0) {
