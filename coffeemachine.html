@@ -3,28 +3,59 @@
     <head>
         <title>Coffee</title>
         <style>
+            :root {
+
+            }
+
+            html, body {
+                padding: 0;
+                margin: 0;
+            }
+
+            .grid-container {
+                padding: 10px;
+                background-color:gray;
+                grid-template-columns: repeat(3, 2fr 1fr 1fr);
+            }
+
             input, button {
                 display: block;
+            }
+
+            .calc-container {
+                background: blue;
+            }
+            
+            .res-container {
+                background: red;
             }
         </style>
     </head>
     <body>
-        <p id="start-p"></p>
-        <label for="calc" id="calc-label">How many cups of coffee do you need? Enter an integer: </label>
-        <input type="text" name="calc" id="calc">
-        <button type="submit" name="calc-submit" id="calc-submit">Submit</button>
-        <label for="water" id="water-label">How many ml of water does the coffee machine have?</label>
-        <input type="text" name="water" id="water">
-        <button type="submit" name="water-submit" id="water-submit">Submit</button>
-        <label for="milk" id="milk-label">How many ml of milk does the coffee machine have?</label>
-        <input type="text" name="milk" id="milk">
-        <button type="submit" name="milk-submit" id="milk-submit">Submit</button>
-        <label for="beans" id="beans-label">How many g of coffee beans does the coffee machine have?</label>
-        <input type="text" name="beans" id="beans">
-        <button type="submit" name="beans-submit" id="beans-submit">Submit</button>
-        <label for="cups" id="cups-label">How many cups of coffee will you need?</label>
-        <input type="text" name="cups" id="cups">
-        <button type="submit" name="cups-submit" id="cups-submit">Submit</button>
+        <div class="grid-container">
+            <div class="calc-container">
+                <label for="calc" id="calc-label">How many cups of coffee do you need? Enter an integer: </label>
+                <input type="text" name="calc" id="calc">
+                <button type="submit" name="calc-submit" id="calc-submit">Submit</button>
+                <label for="water" id="water-label">How many ml of water does the coffee machine have?</label>
+                <input type="text" name="water" id="water">
+                <button type="submit" name="water-submit" id="water-submit">Submit</button>
+                <label for="milk" id="milk-label">How many ml of milk does the coffee machine have?</label>
+                <input type="text" name="milk" id="milk">
+                <button type="submit" name="milk-submit" id="milk-submit">Submit</button>
+                <label for="beans" id="beans-label">How many g of coffee beans does the coffee machine have?</label>
+                <input type="text" name="beans" id="beans">
+                <button type="submit" name="beans-submit" id="beans-submit">Submit</button>
+                <label for="cups" id="cups-label">How many cups of coffee will you need?</label>
+                <input type="text" name="cups" id="cups">
+                <button type="submit" name="cups-submit" id="cups-submit">Submit</button>
+            </div>
+            <div class="make-container"></div>
+            <div class="res-container">
+                <p id="calc-p"></p>
+                <p id="machine-p"></p>
+            </div>
+        </div>
         <script>
             /*startP = document.getElementById('start-p');
             startP.innerHTML = "Starting to make coffee...";
@@ -45,31 +76,63 @@
             Pouring coffee into the cup<br>
             Pouring some milk into the cup<br>
             Coffee is ready`*/
+
             let water = 200;
             let milk = 50;
             let beans = 15;
+
             let waterAmount = 0;
             let milkAmount = 0;
             let beansAmount = 0;
-            let cups = document.getElementById('calc').value; //prompt("How many cups of coffee will you need? Enter an integer: ");
+
+            let cups = document.getElementById('calc').value;
+
             let waterLabel;
             let milkLabel;
             let beansLabel;
             let cupsLabel = document.getElementById('calc-label');
-            let submitBtn = document.getElementById('calc-submit');
-            submitBtn.addEventListener('click', calculate);
-            function calculate() {
+
+            let calcBtn = document.getElementById('calc-submit');
+            let calcP = document.getElementById('calc-p');
+            let machineP = document.getElementById('machine-p');
+
+            calcBtn.addEventListener('click', calculate);
+
+            function calculate(e) {
+                cups = document.getElementById('calc').value;
                 water *= cups;
                 milk *= cups;
                 beans *= cups;
-                document.write(`For ${cups} cups of coffee, you will need:<br> 
+                calcP.innerHTML = (`For ${cups} cup(s) of coffee, you will need:<br> 
                 ${water} ml of water<br>
                 ${milk} ml of milk<br>
                 ${beans} g of coffee beans`);
+                water = 200;
+                milk = 50;
+                beans = 15;
             }
 
+            if (waterAmount === 0 && milkAmount === 0 && beansAmount === 0) {
+                machineP.innerHTML = "The coffee machine has no ingredients. Use the '+' buttons to stock it."
+            }
+
+            /*function (e) {
+                let calcP = document.getElementById('calc-p');
+                cups = document.getElementById('calc').value;
+                water *= cups;
+                milk *= cups;
+                beans *= cups;
+                calcP.innerHTML = (`For ${cups} cups of coffee, you will need:<br> 
+                ${water} ml of water<br>
+                ${milk} ml of milk<br>
+                ${beans} g of coffee beans`);
+                water = 200;
+                milk = 50;
+                beans = 15;
+            }*/
+
             function machine() {
-                label.innerHTML = "Write how many ml of water the coffee machine has."
+                label.innerHTML = "How many ml of water does the coffee machine have?"
             }
         </script>
     </body>
