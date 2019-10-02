@@ -93,9 +93,15 @@
             <div class="res-container">
                 <p id="calc-p"></p>
                 <p id="machine-p"></p>
+                <p id="water-label">Add 200 mg water</p>
                 <button type="button" name="add-water" id="add-water">+</button>
+                <p id="milk-label">Add 50 mg milk</p>
                 <button type="button" name="add-milk" id="add-milk">+</button>
+                <p id="beans-label">Add 15 g coffee beans</p>
                 <button type="button" name="add-beans" id="add-beans">+</button>
+                <p id="water-amount"></p>
+                <p id="milk-amount"></p>
+                <p id="beans-amount"></p>
             </div>
         </div>
         <script>
@@ -129,14 +135,18 @@
 
             let cups = document.getElementById('calc').value;
 
-            let waterLabel;
-            let milkLabel;
-            let beansLabel;
+            let waterLabel = document.getElementById('water-label');
+            let milkLabel = document.getElementById('milk-label');
+            let beansLabel = document.getElementById('beans-label');
             let cupsLabel = document.getElementById('calc-label');
 
             let calcBtn = document.getElementById('calc-submit');
+
             let calcP = document.getElementById('calc-p');
             let machineP = document.getElementById('machine-p');
+            let waterAmountP = document.getElementById('water-amount');
+            let milkAmountP = document.getElementById('milk-amount');
+            let beansAmountP = document.getElementById('beans-amount');
 
             calcBtn.addEventListener('click', calculate);
 
@@ -156,8 +166,17 @@
 
             //ADD MONEY
 
+            waterAmountP.innerHTML = `You have ${waterAmount} mg of water.`
+            milkAmountP.innerHTML = `You have ${milkAmount} mg of milk.`
+            beansAmountP.innerHTML = `You have ${beansAmount} mg of coffee beans.`
+
             if (waterAmount === 0 && milkAmount === 0 && beansAmount === 0) {
                 machineP.innerHTML = "The coffee machine has no ingredients. Use the '+' buttons to stock it."
+            } else {
+                machineP.innerHTML = `You have:<br>
+                ${waterAmount} mg of water<br>
+                ${milkAmount} mg of milk<br>
+                ${beansAmount} g of coffee beans`;
             }
 
             /*function machine() {
