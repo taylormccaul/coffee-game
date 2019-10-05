@@ -22,6 +22,7 @@
                 <p id="customer-p"></p>
                 <p id="process-p"></p>
                 <button type="button" name="brew" id="brew">Brew</button>
+                <button type="button" name="sell" id="sell">Sell</button>
             </div>
             <div class="res-container">
                 <p id="money-p"></p>
@@ -63,6 +64,7 @@
             let calcBtn = document.getElementById('calc-submit');
             let cupsBtn = document.getElementById('cups-submit');
             let brewBtn = document.getElementById('brew');
+            let sellBtn = document.getElementById('sell');
 
             let calcP = document.getElementById('calc-p');
             let coffeeAmountP = document.getElementById('coffee-amount-p');
@@ -80,7 +82,6 @@
             let addBeans = document.getElementById('add-beans');
             let addCups = document.getElementById('add-cups');
 
-
             //initializing variables...
             let waterAmount = 0;
             let milkAmount = 0;
@@ -94,6 +95,8 @@
             calcBtn.addEventListener('click', calculate);
             cupsBtn.addEventListener('click', check);
             brewBtn.addEventListener('click', brew);
+            brewBtn.addEventListener('click', customer);
+            sellBtn.addEventListener('click', sell);
 
             moneyP.innerHTML = `Money:<br>
             ${moneyAmount}`;
@@ -214,6 +217,7 @@
             //let milkTotal = milkAmount / 50;
             //let beansTotal = beansAmount / 15;
 
+            //Check if player has enough, more than enough, or too little coffee to make target amount.
             function check (e) {
                 targetCups = document.getElementById('target-cups').value;
                 if (waterAmount / 200 == targetCups && 
@@ -232,25 +236,25 @@
                         Math.floor(waterAmount / 200) <= Math.floor(cupsAmount / 1)) {
                             limitingReg = waterAmount;
                             regAmount = 200;
-                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 2) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
+                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 1) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
                         } else if (Math.floor(milkAmount / 50) <= Math.floor(waterAmount / 200) && 
                         Math.floor(milkAmount / 50) <= Math.floor(beansAmount / 15) && 
                         Math.floor(milkAmount / 50) <= Math.floor(cupsAmount / 1)) {
                             limitingReg = milkAmount;
                             regAmount = 50;
-                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 2) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
+                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 1) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
                         } else if (Math.floor(beansAmount / 15) <= Math.floor(waterAmount / 200) && 
                         Math.floor(beansAmount / 15) <= Math.floor(milkAmount / 50) && 
                         Math.floor(beansAmount / 15) <= Math.floor(cupsAmount / 1)) {
                             limitingReg = beansAmount;
                             regAmount = 15;
-                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 2) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
+                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 1) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
                         } else if (Math.floor(cupsAmount / 1) <= Math.floor(waterAmount / 200) && 
                         Math.floor(cupsAmount / 1) <= Math.floor(milkAmount / 50) && 
                         Math.floor(cupsAmount / 1) <= Math.floor(beansAmount / 15)) {
                             limitingReg = cupsAmount;
                             regAmount = 1;
-                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 2) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
+                            machineP.innerHTML = "You have more than enough coffee! I can make " + (Math.floor(limitingReg / regAmount) - 1) + " more cup(s) of coffee. Click the 'brew' button to begin making coffee.";
                         }
                 } else if (waterAmount / 200 < targetCups ||
                     milkAmount / 50 < targetCups ||
@@ -286,6 +290,7 @@
                             processP.innerHTML = "";
                         }
                     }, 3000);
+                    i = 0;
                     coffeeAmountP.innerHTML = `Coffee:<br>
                     ${coffeeAmount}`;
                 } else if (waterAmount < 0) {
@@ -322,19 +327,22 @@
                 waterLabel.innerHTML = "How many ml of water does the coffee machine have?"
             }*/
 
+            let coffeeMin = 1;
+            let coffeeMax = 5;
+            let randomCoffee = Math.floor(Math.random() * (coffeeMax - coffeeMin)) + coffeeMin;
+
             function customer() {
-                let coffeeMin = 1;
-                let coffeeMax = 5;
-                let randomCoffee = Math.floor(Math.random() * (coffeeMax - coffeeMin)) + coffeeMin;
-
                 customerP.innerHTML = `You have a customer! The customer would like ${randomCoffee} cup(s) of coffee.`
-                /*let waterMin = 200;
-                let waterMax = 600;
-                let randomWater = Math.floor(Math.random() * waterMax - waterMin) - waterMin;
+            }
 
-                let milkMin = 50;
-                let milkMax = 0;
-                let randomMilk = Math.floor(Math.random() * milkMax - milkMin) - milkMin;*/
+            function sell() {
+                coffeeAmount -= randomCoffee;
+                coffeeAmountP.innerHTML = `Coffee:<br>
+                ${coffeeAmount}`;
+
+                customerP.innerHTML = "";
+
+                randomCoffee = Math.floor(Math.random() * (coffeeMax - coffeeMin)) + coffeeMin;
             }
         </script>
     </body>
