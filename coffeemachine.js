@@ -291,6 +291,7 @@ function sell() {
     coffeeAmount -= randomCoffee;
     coffeeAmountP.innerHTML = `Coffee:<br>
     ${coffeeAmount}`;
+    moneyAmount += 10;
 
     customerP.innerHTML = "";
 
